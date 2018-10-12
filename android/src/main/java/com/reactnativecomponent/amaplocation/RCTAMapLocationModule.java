@@ -12,6 +12,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -162,20 +163,38 @@ public class RCTAMapLocationModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void getReGeocode() {
-        locationOption.setNeedAddress(true);    //可选，设置是否返回逆地理地址信息。默认是true
-        // 设置定位参数
-        locationClient.setLocationOption(locationOption);
-        // 启动定位
-        locationClient.startLocation();
+        try {
+            if(null == locationOption){
+                Log.e(this.getClass().getName()+" getLocation","null == locationOption");
+                return;
+            }
+            locationOption.setNeedAddress(true);    //可选，设置是否返回逆地理地址信息。默认是true
+            // 设置定位参数
+            locationClient.setLocationOption(locationOption);
+            // 启动定位
+            locationClient.startLocation();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     @ReactMethod
     public void getLocation() {
-        locationOption.setNeedAddress(false);    //可选，设置是否返回逆地理地址信息。默认是true
-        // 设置定位参数
-        locationClient.setLocationOption(locationOption);
-        // 启动定位
-        locationClient.startLocation();
+        try {
+            if(null == locationOption){
+                Log.e(this.getClass().getName()+" getLocation","null == locationOption");
+                return;
+            }
+            locationOption.setNeedAddress(false);    //可选，设置是否返回逆地理地址信息。默认是true
+            // 设置定位参数
+            locationClient.setLocationOption(locationOption);
+            // 启动定位
+            locationClient.startLocation();
+        }catch (Exception e){
+            e.printStackTrace();;
+        }
+
     }
 
     @ReactMethod
