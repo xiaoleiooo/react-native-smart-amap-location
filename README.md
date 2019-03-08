@@ -47,8 +47,6 @@ npm install react-native-smart-amap-location --save
 
 * 同上位置, 选择Add items, 将系统库JavaScriptCore.framework加入.
 
-* 同上位置, 选择Add items, 将系统库ExternalAccessory.framework加入.
-
 * 如需要开启后台定位, 选择Capabilities, 找到Background Modes选择ON, 勾选上Location Updates.
 
 * 选择Build Settings, 找到Header Search Paths, 确认其中包含$(SRCROOT)/../../../react-native/React, 模式为recursive.
