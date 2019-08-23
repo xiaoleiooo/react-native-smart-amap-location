@@ -57,6 +57,7 @@ RCT_EXPORT_METHOD(setOptions:(NSDictionary *)options)
     BOOL allowsBackgroundLocationUpdates = NO;
     int locationTimeout = DefaultLocationTimeout;
     int reGeocodeTimeout = DefaultReGeocodeTimeout;
+    BOOL detectRiskOfFakeLocation = NO;
     
     if(options != nil) {
         
@@ -82,6 +83,10 @@ RCT_EXPORT_METHOD(setOptions:(NSDictionary *)options)
         if([keys containsObject:@"reGeocodeTimeout"]) {
             reGeocodeTimeout = [[options objectForKey:@"reGeocodeTimeout"] intValue];
         }
+        
+        if([keys containsObject:@"detectRiskOfFakeLocation"]) {
+            detectRiskOfFakeLocation = [[options objectForKey:@"detectRiskOfFakeLocation"] boolValue];
+        }
     }
     
     //设置期望定位精度
@@ -94,10 +99,12 @@ RCT_EXPORT_METHOD(setOptions:(NSDictionary *)options)
     [self.locationManager setAllowsBackgroundLocationUpdates:allowsBackgroundLocationUpdates];
     
     //设置定位超时时间
-    [self.locationManager setLocationTimeout:locationTimeout];
+        [self.locationManager setLocationTimeout:locationTimeout];
     
     //设置逆地理超时时间
     [self.locationManager setReGeocodeTimeout:reGeocodeTimeout];
+    
+    [self.locationManager setDetectRiskOfFakeLocation: detectRiskOfFakeLocation];
 
 }
 
@@ -150,7 +157,8 @@ RCT_EXPORT_METHOD(stopUpdatingLocation)
     resultDic = @{
                   @"error": @{
                           @"code": @(error.code),
-                          @"localizedDescription": error.localizedDescription
+                          @"localizedDescription": error.localizedDescription,
+                          @"userInfo": error.userInfo,
                           }
                   };
     return resultDic;
@@ -200,7 +208,7 @@ RCT_EXPORT_METHOD(stopUpdatingLocation)
         resultDic = @{
                       @"error": @{
                               @"code": @(-1),
-                              @"localizedDescription": @"定位结果不存在"
+                              @"localizedDescription": @"定位结果不存在",
                               }
                       };
     }
